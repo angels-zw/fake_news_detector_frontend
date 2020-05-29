@@ -3,11 +3,21 @@ import styled from "styled-components";
 import { ResultsConsumer } from "../components/context";
 
 class SearchBar extends Component {
+
+  state = {
+    query: '',
+  }
+
+  handleChange = event => {
+    this.setState({ query: event.target.value });
+  }
+
+
   render() {
     return (
       <ResultsConsumer>
         {(value) => {
-          const { verifyNews } = value;
+          const { verifyNews , postData } = value;
           return (
             <SearchBarWrapper>
               <section>
@@ -29,13 +39,14 @@ class SearchBar extends Component {
                           id="search"
                           type="text"
                           placeholder=" fake news detector"
+                          onChange={this.handleChange}
                         />
                       </div>
                       <div className="input-field second-wrap">
                         <button
                           className="btn-search"
                           type="button"
-                          onClick={() => verifyNews()}
+                          onClick={() => postData(this.state.query)}
                         >
                           SEARCH
                         </button>

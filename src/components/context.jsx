@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { results } from "../data";
+import axios from "axios";
+
 const ResultsContext = React.createContext();
 
 class ResultsProvider extends Component {
@@ -9,6 +11,16 @@ class ResultsProvider extends Component {
 
   verifyNews = () => {
     this.setResults();
+  };
+
+  postData = (query) => {
+    const user = {
+      name: query,
+    };
+    axios.post(`localhost:`, { user }).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
   };
 
   setResults = () => {
@@ -28,6 +40,7 @@ class ResultsProvider extends Component {
         value={{
           ...this.state,
           verifyNews: this.verifyNews,
+          postData: this.postData,
         }}
       >
         {this.props.children}
